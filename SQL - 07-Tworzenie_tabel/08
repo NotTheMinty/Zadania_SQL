@@ -1,0 +1,24 @@
+ALTER TABLE miejsca RENAME TO miejsce;
+
+ALTER TABLE miejsce
+CHANGE COLUMN id miejsce_id INT;
+
+ALTER TABLE miejsce
+ADD CONSTRAINT pk_miejsce PRIMARY KEY (miejsce_id);
+
+ALTER TABLE miejsce
+MODIFY COLUMN miejsce_id INT AUTO_INCREMENT;
+
+ALTER TABLE miejsce
+CHANGE COLUMN numer_posesji numer_bud VARCHAR(10);
+
+ALTER TABLE miejsce
+MODIFY COLUMN miasto VARCHAR(30) NOT NULL;
+
+
+ALTER TABLE miejsce
+MODIFY COLUMN numer_bud VARCHAR(10) COMMENT 'Numer budynku';
+
+
+ALTER TABLE miejsce
+ADD COLUMN numer_lok VARCHAR(7) COMMENT 'Numer lokalu';
