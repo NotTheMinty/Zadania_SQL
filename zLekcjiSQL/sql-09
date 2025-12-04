@@ -1,0 +1,11 @@
+-- alter table pracownik add column plec char(1);
+
+-- update pracownik set plec='?'
+
+-- update pracownik set plec='M' where telefon='830-688-424-310'
+
+UPDATE pracownik
+SET plec = CASE
+    WHEN imie LIKE '%a' THEN 'K'
+    ELSE 'M'
+END;
