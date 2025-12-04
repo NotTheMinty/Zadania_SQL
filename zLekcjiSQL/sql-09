@@ -4,8 +4,22 @@
 
 -- update pracownik set plec='M' where telefon='830-688-424-310'
 
-UPDATE pracownik
-SET plec = CASE
-    WHEN imie LIKE '%a' THEN 'K'
-    ELSE 'M'
-END;
+-- update pracownik
+-- set plec = case
+--     when imie like '%a' then 'K'
+--     else 'M'
+-- END;
+
+
+-- update pracownik set pracownik.telefon='123-456-789-012'
+-- where pracownik.id=3 
+
+-- update pracownik set pracownik.ulica='Smutna', pracownik.numer = '50'
+-- where pracownik.imie = 'Lesław' and pracownik.nazwisko = 'Niebrzydowski'
+
+-- update produkt p set p.cena = round(p.cena * 1.2,2)
+
+-- update produkt p set p.cena = round(p.cena*0.5,2)
+-- where p.cena BETWEEN 1000 and 2000
+
+-- update produkt p set p.ilosc = (p.ilosc - 5) where p.ilosc > 5
