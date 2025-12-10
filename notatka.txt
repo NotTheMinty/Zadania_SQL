@@ -1,0 +1,20 @@
+autor
+int autoincrement PK
+varchar not null
+varchar not null
+
+książki
+int autoincrement PK
+varchar not null
+FK autor(autor_id)
+
+wypożyczenie
+int autoincrement PK
+FK książki(ksiazka_id)
+FK klient(klient_id)
+date not null
+
+klient
+int autoincrement PK 
+varchar not null
+vaarchar not null
