@@ -1,0 +1,27 @@
+CREATE TABLE autor (
+    autor_id INT PRIMARY KEY AUTO_INCREMENT,
+    nazwisko VARCHAR(30) NOT NULL,
+    imie VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE ksiazki (
+    ksiazka_id INT PRIMARY KEY AUTO_INCREMENT,
+    autor_id INT NOT NULL,
+    tytul VARCHAR(30) NOT NULL,
+    FOREIGN KEY (autor_id) REFERENCES autor(autor_id)
+);
+
+CREATE TABLE klienci (
+    klient_id INT PRIMARY KEY AUTO_INCREMENT,
+    nazwisko VARCHAR(30) NOT NULL,
+    imie VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE wypozyczenie (
+    wypozyczenie_id INT PRIMARY KEY AUTO_INCREMENT,
+    ksiazka_id INT NOT NULL,
+    klient_id INT NOT NULL,
+    data_wypo DATE NOT NULL,
+    FOREIGN KEY (ksiazka_id) REFERENCES ksiazki(ksiazka_id),
+    FOREIGN KEY (klient_id) REFERENCES klienci(klient_id)
+);
