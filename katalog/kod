@@ -1,0 +1,19 @@
+create table autor(
+    id_autora int PRIMARY key AUTO_INCREMENT,
+    imie varchar(30) not null,
+    nazwisko varchar(30) not null
+    ) engine = INNODB;
+
+CREATE TABLE tytuly_autora (
+    id_tytulu INT PRIMARY KEY AUTO_INCREMENT,
+    id_autora INT NOT NULL,
+    tytul VARCHAR(100) NOT NULL,
+    FOREIGN KEY (id_autora) REFERENCES autor(id_autora)
+);
+
+INSERT INTO tytuly_autora (id_autora, tytul)
+SELECT id_autora, 'Lśnienie'
+FROM autor
+WHERE imie = 'Stephen' AND nazwisko = 'King';
+
+drop table ksiazka
