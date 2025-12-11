@@ -16,4 +16,3 @@ SELECT id_autora, 'Lśnienie'
 FROM autor
 WHERE imie = 'Stephen' AND nazwisko = 'King';
 
-drop table ksiazka
