@@ -25,3 +25,36 @@ CREATE TABLE wypozyczenie (
     FOREIGN KEY (ksiazka_id) REFERENCES ksiazki(ksiazka_id),
     FOREIGN KEY (klient_id) REFERENCES klienci(klient_id)
 );
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Wyświetl id_produktu, nazwa, cena posortowane po cenie malejąco.
+select produkty.id_produktu, produkty.nazwa, produkty.cena from produkty order by produkty.cena DESC;
+-- Pokaż kategoria, produkt, cena (JOIN do kategorie) posortowane: nazwa kategorii A-Z, w ramach kategorii cena malejąco, potem nazwa produktu.
+select kategorie.nazwa, produkty.cena, produkty.nazwa from kategorie join produkty on kategorie.id_kategorii = produkty.id_kategorii order by kategorie.nazwa asc, produkty.cena desc, produkty.nazwa;
+-- Wyświetl miasto, nazwisko, imie posortowane: miasto wg kolacji polskiej, a następnie nazwisko, imię.
+-- -- select klienci.miasto, klienci.nazwisko, klienci.imie from klienci order by klienci.miasto collate utf8_polish_ci, klienci.nazwisko, klienci.imie;
+-- Posortuj id_zamowienia, status, data_zamowienia tak, by najpierw były 'zrealizowane', potem 'w realizacji', na końcu 'anulowane'; w każdej grupie najnowsze daty pierwsze.
+select zamowienia.id_zamowienia, zamowienia.status, zamowienia.data_zamowienia from zamowienia order by 
+	case zamowienia.status
+    	when 'zrealizowane' then 1
+        when 'w realizacji' then 2
+        when 'anulowane' then 3
+        else 4
+    end,
+    zamowienia.data_zamowienia; 
+-- Dla każdego klienta policz łączną zapłaconą kwotę (JOIN do platnosci), posortuj po tej sumie malejąco, klientów bez płatności umieść na końcu.
+select klienci.id_klienta, sum(platnosci.kwota) as "suma" from klienci join zamowienia on klienci.id_klienta = zamowienia.id_zamowienia join platnosci on zamowienia.id_zamowienia = platnosci.id_zamowienia group by klienci.id_klienta order by sum(platnosci.kwota) desc, sum(platnosci.kwota) is null, klienci.id_klienta
+-- Dla każdej kategorii policz średnią cenę produktów i posortuj po niej malejąco, a następnie po nazwie kategorii.
+-- Wyświetl 5 najnowszych zamówień (po dacie malejąco). Jeśli remis (czyli ta sama data) to posortuj wg kwoty.
+-- Wypisz produkty, w których nazwa zawiera liczbę (np. Monitor 27", Monitor 24"), posortuj rosnąco po tej liczbie (naturalny porządek), a następnie po nazwie. (REGEXP_SUBSTR)
