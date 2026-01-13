@@ -1,0 +1,3 @@
+select kategorie.nazwa, avg(produkty.cena) from kategorie join produkty on produkty.id_kategorii = kategorie.id_kategorii group by kategorie.nazwa order by avg(produkty.cena) desc, kategorie.nazwa asc;
+
+select zamowienia.id_zamowienia, zamowienia.data_zamowienia, platnosci.kwota from zamowienia left join platnosci on platnosci.id_zamowienia = zamowienia.id_zamowienia order by zamowienia.data_zamowienia desc, platnosci.kwota desc limit 5
