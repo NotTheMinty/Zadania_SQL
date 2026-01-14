@@ -1,0 +1,25 @@
+-- 1
+SELECT osoby.imie, osoby.nazwisko, zamowienia.data_zamowienia
+FROM osoby
+JOIN zamowienia ON zamowienia.id_osoby = osoby.id_osoby
+WHERE YEAR(zamowienia.data_zamowienia) = 2024;
+
+-- 2
+SELECT emaile.email, osoby.imie, osoby.nazwisko
+FROM emaile
+RIGHT JOIN osoby ON emaile.id_osoby = osoby.id_osoby;
+
+-- 3
+SELECT telefony.numer, osoby.imie, osoby.nazwisko 
+FROM telefony
+RIGHT JOIN osoby ON osoby.id_osoby = telefony.id_osoby;
+
+-- 4
+SELECT osoby.imie, osoby.nazwisko, adresy.miasto, telefony.numer, emaile.email, zamowienia.id_zamowienia
+FROM osoby
+JOIN adresy ON osoby.id_osoby = adresy.id_osoby
+JOIN emaile ON osoby.id_osoby = emaile.id_osoby
+JOIN telefony ON osoby.id_osoby = telefony.id_osoby
+JOIN zamowienia ON osoby.id_osoby = zamowienia.id_osoby
+GROUP BY osoby.id_osoby
+ORDER BY zamowienia.data_zamowienia DESC
