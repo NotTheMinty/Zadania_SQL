@@ -1,32 +1,46 @@
-ZESTAW 1
+-- zestaw 1
 
-select osoby.imie, osoby.nazwisko, emaile.email, adresy.miasto from osoby join emaile on osoby.id_osoby = emaile.id_osoby join adresy on adresy.id_osoby = osoby.id_osoby;
+-- 1
+select o.imie, o.nazwisko, e.email, a.miasto from osoby o join emaile e on o.id_osoby = e.id_osoby join adresy a on o.id_osoby = a.id_osoby;
 
-select osoby.imie, osoby.nazwisko, zamowienia.produkt, zamowienia.kwota from zamowienia join osoby on zamowienia.id_osoby = osoby.id_osoby where zamowienia.kwota > 2000;
+-- 2
+select o.imie, o.nazwisko, z.produkt, z.kwota from osoby o join zamowienia z on o.id_osoby = z.id_osoby where z.kwota > 2000;
 
-select avg(zamowienia.kwota) from zamowienia;
+-- 3
+select avg(kwota) as srednia_kwota from zamowienia;
 
-select adresy.miasto, count(adresy.miasto) from adresy join osoby on osoby.id_osoby = adresy.id_osoby group by adresy.miasto;
+-- 4
+select a.miasto, count(a.id_osoby) as liczba_osob from adresy a group by a.miasto;
 
-select osoby.imie, osoby.nazwisko from osoby left join zamowienia on osoby.id_osoby = zamowienia.id_osoby where zamowienia.kwota is null;
+-- 5
+select o.imie, o.nazwisko from osoby o left join zamowienia z on o.id_osoby = z.id_osoby where z.id_osoby is null;
 
-select osoby.imie, osoby.nazwisko, sum(zamowienia.kwota) as suma from osoby join zamowienia on osoby.id_osoby = zamowienia.id_osoby group by osoby.id_osoby order by suma desc limit 3;
+-- 6
+select o.imie, o.nazwisko, sum(z.kwota) as suma_zamowien from osoby o join zamowienia z on o.id_osoby = z.id_osoby group by o.id_osoby order by suma_zamowien desc limit 3;
 
-select osoby.imie, osoby.nazwisko from osoby join zamowienia on osoby.id_osoby = zamowienia.id_osoby group by osoby.id_osoby having count(zamowienia.kwota) > 1;
+-- 7
+select o.imie, o.nazwisko, count(z.id_zamowienia) as liczba_zamowien from osoby o join zamowienia z on o.id_osoby = z.id_osoby group by o.id_osoby having count(z.id_zamowienia) > 1;
 
 
+-- zestaw 2
 
+-- 1
+select o.imie, o.nazwisko from osoby o join zamowienia z on o.id_osoby = z.id_osoby where year(z.data_zamowienia) = 2024 group by o.id_osoby;
 
-ZESTAW 2
+-- 2
+select o.imie, o.nazwisko, e.email from osoby o right join emaile e on o.id_osoby = e.id_osoby;
 
-select osoby.imie, osoby.nazwisko, zamowienia.data_zamowienia from osoby join zamowienia on zamowienia.id_osoby = osoby.id_osoby where year(zamowienia.data_zamowienia) = 2024;
+-- 3
+select o.imie, o.nazwisko, t.numer, t.typ from osoby o right join telefony t on o.id_osoby = t.id_osoby;
 
-select emaile.email from emaile right join osoby on osoby.id_osoby = emaile.id_osoby;
+-- 4
+select o.imie, o.nazwisko, a.miasto, t.numer, e.email, z.data_zamowienia from osoby o left join adresy a on o.id_osoby = a.id_osoby left join telefony t on o.id_osoby = t.id_osoby left join emaile e on o.id_osoby = e.id_osoby left join zamowienia z on o.id_osoby = z.id_osoby;
 
-select telefony.numer, osoby.imie, osoby.nazwisko from telefony right join osoby on osoby.id_osoby = telefony.id_osoby;
+-- 5
+select z.produkt, z.kwota, a.miasto, a.ulica from zamowienia z left join adresy a on z.id_osoby = a.id_osoby;
 
-select osoby.imie, osoby.nazwisko, telefony.numer, emaile.email, zamowienia.produkt from osoby 
-join telefony on telefony.id_osoby = osoby.id_osoby 
-join zamowienia on zamowienia.id_osoby = osoby.id_osoby 
-join emaile on emaile.id_osoby = osoby.id_osoby group by osoby.id_osoby order by zamowienia.data_zamowienia desc limit 1;
+-- 6
+select o.imie, o.nazwisko from osoby o left join emaile e on o.id_osoby = e.id_osoby where e.id_osoby is null;
 
+-- 7
+select o.imie, o.nazwisko, z.produkt, z.kwota from osoby o left join zamowienia z on o.id_osoby = z.id_osoby;
