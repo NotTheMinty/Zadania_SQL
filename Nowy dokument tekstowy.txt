@@ -1,0 +1,56 @@
+-- 2
+SELECT potrawy.nazwa, rodzaje.rodzaj FROM potrawy
+JOIN rodzaje ON potrawy.idRodzaje = rodzaje.idRodzaje
+WHERE potrawy.idPotrawy = 7;
+
+-- 3
+SELECT potrawy.nazwa, alergeny.alergen FROM potrawy
+JOIN lista_alergenow ON lista_alergenow.idPotrawy = potrawy.idPotrawy
+JOIN alergeny ON alergeny.idAlergeny = lista_alergenow.idAlergeny
+WHERE potrawy.idPotrawy = 7;
+
+-- 4
+SELECT potrawy.przepis, potrawy.plik FROM potrawy
+WHERE potrawy.idPotrawy = 7;
+
+-- ===============================================================
+
+-- 1
+SELECT k.imie, k.kolor, k.cena FROM klienci k
+WHERE k.topKlient = 1;
+
+-- 2
+SELECT k.imie, k.cena FROM klienci k
+WHERE DATE(k.termin) = '2024-05-23';
+
+-- 3
+SELECT k.imie, k.kolor, ks.krztalt FROM klienci k
+JOIN ksztalty ks ON ks.id = k.ksztalty_id
+WHERE ks.ksztalt = 'migdał';
+
+-- 4
+ALTER TABLE wzory
+ADD COLUMN doplata int(10);
+
+-- ====================================================================
+
+-- 1
+SELECT szczyty.id, szczyty.nazwa 
+FROM szczyty
+ORDER BY szczyty.wysokosc DESC;
+
+-- 2
+SELECT szczyty.plik, szczyty.nazwa 
+FROM szczyty
+LIMIT 10;
+
+-- 3
+SELECT szczyty.plik, szczyty.nazwa, szczyty.wysokosc, szczyty.pasmo, opis.opis
+FROM szczyty
+JOIN opis ON opis.szczyty_id = szczyty.id
+WHERE szczyty.id = 1;
+
+-- 4
+SELECT szczyty.nazwa, szczyty.wysokosc, szczyty.pasmo
+FROM szczyty
+WHERE szczyty.pasmo LIKE 'Beskid%';
