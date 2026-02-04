@@ -1,0 +1,7 @@
+select szczyty.id, szczyty.nazwa from szczyty order by szczyty.wysokosc desc;
+
+select szczyty.plik, szczyty.nazwa from szczyty limit 10;
+
+select szczyty.plik, szczyty.nazwa, szczyty.wysokosc, szczyty.pasmo, opis.opis from szczyty join opis on szczyty.id = opis.szczyty_id where szczyty.id = 1;
+
+select szczyty.nazwa, szczyty.wysokosc, szczyty.pasmo from szczyty where szczyty.pasmo like 'Beskid%';
