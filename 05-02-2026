@@ -1,0 +1,23 @@
+-- zwracajace liczbe filmow z tabeli film pogrupowane wg pola ocena
+
+select film.ocena, count(*) as c from film group by film.ocena order by c desc;
+
+-- uzywajac zlaczenia filmu z kategoria napisz zapytanie zwracajace liczbe filmow w kazdej kategorii
+
+select lista_filmow.kategoria, count(lista_filmow.tytul) from lista_filmow group by lista_filmow.kategoria;
+
+-- uzywajac zlaczenia tabel film z film_aktor napisz liczbe aktorow grajacych w kazdym filmie
+
+select film.tytul, count(*) from film join film_aktor on film.film_id = film_aktor.film_id group by film.tytul;
+
+-- uzywajac laczenia tabel platnosc z klient oblicz sume wszystkich platnosci poszczegolnych klientow
+
+select klient.imie, klient.nazwisko, sum(platnosc.kwota) from klient join platnosc on klient.klient_id = platnosc.klient_id group by klient.klient_id order by klient.klient_id;
+
+-- uzywajac zlaczenia tabel platnosc, wypozyczenie, spis i film oblicz sume wszystkich platnosci za film 
+
+select film.tytul, sum(platnosc.kwota) as s from film join spis on film.film_id = spis.film_id join wypozyczenie on spis.spis_id = wypozyczenie.spis_id join platnosc on wypozyczenie.wypozyczenie_id = platnosc.wypozyczenie_id group by film.tytul order by s desc;
+
+-- uzywajac zlaczenia tabeli platnosc z klient oblicz srednie kwoty platnosci dla poszczegolnych klientow
+
+select klient.imie, klient.nazwisko, avg(platnosc.kwota) from klient join platnosc on klient.klient_id = platnosc.klient_id group by klient.klient_id
