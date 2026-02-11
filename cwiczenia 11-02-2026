@@ -18,3 +18,51 @@ select osoby.imie, osoby.nazwisko from osoby left join emaile on osoby.id_osoby 
 
 -- Wyświetl wszystkie osoby i ich zamówienia, nawet jeśli nie mają żadnego (LEFT JOIN).
 select osoby.imie, osoby.nazwisko, zamowienia.id_zamowienia, zamowienia.kwota, zamowienia.produkt from osoby left join zamowienia on osoby.id_osoby = zamowienia.id_osoby;
+
+
+
+
+
+
+
+-- Wyświetl liczbę wszystkich osób w tabeli osoby.
+select count(osoby.id_osoby) from osoby;
+-- Policz, ile jest numerów telefonów typu komórkowy, a ile stacjonarny (użyj GROUP BY).
+select count(telefony.numer) from telefony group by telefony.typ;
+-- Wyświetl liczbę zamówień złożonych przez każdą osobę (imię, nazwisko, liczba zamówień).
+select count(zamowienia.id_osoby) from zamowienia group by zamowienia.id_osoby;
+-- Oblicz łączną wartość wszystkich zamówień w tabeli zamowienia.
+select sum(zamowienia.kwota) from zamowienia;
+-- Wyświetl średnią wartość zamówienia.
+select avg(zamowienia.kwota) from zamowienia;
+-- Wyświetl dla każdej osoby: imię, nazwisko, miasto, liczbę zamówień.
+select osoby.imie, osoby.nazwisko, adresy.miasto, count(zamowienia.kwota) from osoby join zamowienia on osoby.id_osoby = zamowienia.id_osoby join adresy on osoby.id_osoby = adresy.id_osoby group by osoby.id_osoby;
+-- Wyświetl sumę wydanych pieniędzy przez każdą osobę (imię, nazwisko, suma kwot).
+select osoby.imie, osoby.nazwisko, sum(zamowienia.kwota) from osoby join zamowienia on osoby.id_osoby = zamowienia.id_osoby group by osoby.id_osoby;
+-- Wyświetl osoby, które nie złożyły żadnego zamówienia (użyj LEFT JOIN).
+select osoby.imie, osoby.nazwisko from osoby left join zamowienia on osoby.id_osoby = zamowienia.id_osoby where zamowienia.produkt or zamowienia.kwota is null;
+-- Wyświetl średnią wartość zamówień dla każdej osoby.
+select osoby.imie, osoby.nazwisko, avg(zamowienia.kwota) from osoby join zamowienia on osoby.id_osoby = zamowienia.id_osoby group by osoby.id_osoby;
+-- Wyświetl miasto oraz łączną kwotę zamówień osób z danego miasta.
+select adresy.miasto, count(zamowienia.produkt) from adresy join osoby on adresy.id_osoby = osoby.id_osoby join zamowienia on osoby.id_osoby = zamowienia.id_osoby group by adresy.miasto;
+-- Wyświetl osoby, które wydały łącznie więcej niż 2123 zł (HAVING).
+select osoby.imie, osoby.nazwisko from osoby join zamowienia on osoby.id_osoby = zamowienia.id_osoby having sum(zamowienia.kwota) > 2123;
+-- Policz, ile zamówień zostało złożonych w każdej dacie.
+select zamowienia.data_zamowienia ,count(zamowienia.data_zamowienia) as 'data' from zamowienia group by zamowienia.data_zamowienia;
+-- Wyświetl średnią kwotę zamówień w podziale na typ telefonu osoby.
+select avg(zamowienia.kwota), telefony.typ from zamowienia join osoby on zamowienia.id_osoby = osoby.id_osoby join telefony on osoby.id_osoby = telefony.id_osoby group by telefony.typ;
+-- Wyświetl osobę, która złożyła najdroższe zamówienie (JOIN + MAX).
+select osoby.imie, osoby.nazwisko, zamowienia.kwota from osoby join zamowienia on osoby.id_osoby = zamowienia.id_osoby group by osoby.id_osoby order by zamowienia.kwota desc limit 1;
+-- Wyświetl 3 osoby, które wydały najwięcej pieniędzy (sortowanie malejące).
+select osoby.imie, osoby.nazwisko, sum(zamowienia.kwota) as suma from osoby join zamowienia on osoby.id_osoby = zamowienia.id_osoby group by osoby.id_osoby order by suma desc limit 3;
+-- Wyświetl liczbę osób w każdym mieście.
+select count(adresy.miasto), adresy.miasto from adresy group by adresy.miasto;
+-- Wyświetl miasto, w którym suma zamówień była największa.
+select sum(zamowienia.kwota) as suma, adresy.miasto from adresy join osoby on adresy.id_osoby = osoby.id_osoby join zamowienia on osoby.id_osoby = zamowienia.id_osoby group by adresy.miasto order by suma desc limit 1;
+-- Policz, ile osób ma więcej niż jedno zamówienie.
+select count(*) from 
+	(select * from osoby join zamowienia on osoby.id_osoby = zamowienia.id_osoby group by 		osoby.id_osoby having count(zamowienia.id_osoby) > 1);
+-- Wyświetl dla każdej osoby: imię, nazwisko, liczbę zamówień, sumę zamówień, średnią wartość zamówienia (jedno zapytanie).
+select osoby.imie, osoby.nazwisko, count(zamowienia.id_osoby), sum(zamowienia.kwota), avg(zamowienia.kwota) from osoby join zamowienia on osoby.id_osoby = zamowienia.id_osoby group by osoby.id_osoby;
+-- Wyświetl osoby, których średnia wartość zamówień jest wyższa od ogólnej średniej wszystkich zamówień.
+
