@@ -1,0 +1,20 @@
+-- Wyświetl osoby, które złożyły zamówienia w roku 2024 (JOIN + warunek na rok YEAR).
+select osoby.imie, osoby.nazwisko from osoby join zamowienia on osoby.id_osoby = zamowienia.id_zamowienia where year(zamowienia.data_zamowienia) = 2024;
+
+-- Wyświetl wszystkie adresy email i przypisane do nich osoby (RIGHT JOIN);
+select emaile.email, osoby.imie, osoby.nazwisko from osoby right join emaile on emaile.id_osoby = osoby.id_osoby;
+
+-- Wyświetl wszystkie numery telefonów i właścicieli (jeśli są przypisani) (RIGHT JOIN).
+select telefony.numer, osoby.imie, osoby.nazwisko from osoby right join telefony on osoby.id_osoby = telefony.id_osoby;
+
+-- Wyświetl imię, nazwisko, miasto, telefon, email oraz ostatnie zamówienie klienta. (JOIN)
+select osoby.imie, osoby.nazwisko, adresy.miasto, telefony.numer, emaile.email, zamowienia.id_zamowienia from osoby join adresy on osoby.id_osoby = adresy.id_osoby join telefony on telefony.id_osoby = osoby.id_osoby join emaile on osoby.id_osoby = emaile.id_osoby join zamowienia on osoby.id_osoby = zamowienia.id_osoby group by osoby.id_osoby order by zamowienia.data_zamowienia desc;
+
+-- Wyświetl wszystkie zamówienia z miastem i ulicą klienta (LEFT JOIN).
+select zamowienia.id_zamowienia, zamowienia.produkt, zamowienia.kwota, adresy.miasto, adresy.ulica, osoby.id_osoby from osoby left join zamowienia on osoby.id_osoby = zamowienia.id_zamowienia left join adresy on osoby.id_osoby =adresy.id_osoby;
+
+-- Wyświetl osoby, które nie mają przypisanego adresu email (LEFT JOIN + filtr IS NULL).
+select osoby.imie, osoby.nazwisko from osoby left join emaile on osoby.id_osoby = emaile.id_osoby where emaile.email is null;
+
+-- Wyświetl wszystkie osoby i ich zamówienia, nawet jeśli nie mają żadnego (LEFT JOIN).
+select osoby.imie, osoby.nazwisko, zamowienia.id_zamowienia, zamowienia.kwota, zamowienia.produkt from osoby left join zamowienia on osoby.id_osoby = zamowienia.id_osoby;
