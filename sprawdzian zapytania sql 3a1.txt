@@ -1,0 +1,44 @@
+-- a
+-- ALTER TABLE klient ADD COLUMN telefon VARCHAR(20)
+
+-- b
+SELECT k.imie, k.nazwisko FROM klient k
+ORDER BY k.nazwisko ASC, k.imie DESC;
+
+-- c
+SELECT k.nazwa, p.nazwa, p.cena, p.ilosc FROM kategoria k
+JOIN produkt p ON p.kategoria_id = k.id
+WHERE k.id = 28;
+
+-- d
+SELECT k.nazwisko, k.imie, k.miejscowosc, SUM(p.cena) FROM klient k
+JOIN transakcja t ON t.klient_id = k.id
+JOIN produkt p ON t.produkt_id = p.id
+GROUP BY k.id;
+
+-- e
+SELECT k.nazwa, p.nazwa FROM kategoria k
+LEFT JOIN produkt p ON p.kategoria_id = k.id;
+
+-- f
+SELECT k.imie, k.nazwisko, COUNT(*) FROM klient k
+JOIN transakcja t ON t.klient_id = k.id
+GROUP BY k.id;
+
+-- g
+SELECT k.imie, k.nazwisko, AVG(p.cena) FROM klient k
+JOIN transakcja t ON t.klient_id = k.id
+JOIN produkt p ON p.id = t.produkt_id
+GROUP BY k.id;
+
+-- h
+SELECT k.nazwa, SUM(p.cena) FROM kategoria k
+JOIN produkt p ON p.kategoria_id = k.id
+JOIN transakcja t ON t.produkt_id = p.id
+GROUP BY k.id
+ORDER BY SUM(p.cena) DESC;
+
+-- i
+SELECT k.imie, k.nazwisko FROM klient k
+LEFT JOIN transakcja t ON t.klient_id = k.id
+WHERE k.id IS NULL;
